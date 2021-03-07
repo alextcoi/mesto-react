@@ -15,7 +15,7 @@ function ImagePopup ({card, onClose}) {
                 <p className="opened-card__name">{card.name}</p>
             </figure>
         </section>
-    )
+    );
 }
 
 export default ImagePopup;

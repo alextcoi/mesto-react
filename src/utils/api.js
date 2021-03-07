@@ -4,6 +4,13 @@ class Api {
         this._baseUrl = baseUrl
     }
 
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+    }
+
     getProfile() {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
@@ -11,12 +18,7 @@ class Api {
                 authorization: this._password,
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     getCards() {
@@ -26,12 +28,7 @@ class Api {
                 authorization: this._password,
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     putLike(id) {
@@ -41,12 +38,7 @@ class Api {
                 authorization: this._password
             },           
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     deleteLike(id) {
@@ -56,12 +48,7 @@ class Api {
                 authorization: this._password
             }            
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     patchProfile(item) {
@@ -76,12 +63,7 @@ class Api {
                 about: item.form_profession
             }),
             })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
+            .then(this._checkResponse)
     }
 
     patchProfilePic(item) {
@@ -95,12 +77,7 @@ class Api {
                 avatar: item.avatar
             }),
             })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
+            .then(this._checkResponse)
     }
 
     postPicture(item) {
@@ -115,12 +92,7 @@ class Api {
                 link: item.link
             }),
             })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
+            .then(this._checkResponse)
     }
 
     deletePicture(id) {
@@ -130,12 +102,7 @@ class Api {
                 authorization: 'f0a6b51b-b6dd-4422-9c6f-1c6d9f1c16da'
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 }
 
