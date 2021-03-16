@@ -58,14 +58,14 @@ function App() {
     function handleSubmitUser(item) {
         api.patchProfile(item)
             .then(result => setCurrentUser(result))
-            .then(closeAllPopups())
+            .then(closeAllPopups)
             .catch((err) => {console.log(err)});
     };//отправляем обновленные данные о пользователе, обновляем стейт с пользователем
 
     function handleUpdateAvatar(item) {
         api.patchProfilePic(item)
             .then(result => setCurrentUser(result))
-            .then(closeAllPopups())
+            .then(closeAllPopups)
             .catch((err) => {console.log(err)});
     };//отправляем новую аватарку пользователя, обновляем стейт с пользователем
 
@@ -73,10 +73,12 @@ function App() {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
 
         isLiked 
-            ? api.deleteLike(card._id).then((newCard) => {
-            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));})
-            : api.putLike(card._id).then((newCard) => {
-            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));}); 
+            ? api.deleteLike(card._id)
+                .then((newCard) => {setCards((state) => state.map((c) => c._id === card._id ? newCard : c));})
+                .catch((err) => {console.log(err)})
+            : api.putLike(card._id)
+                .then((newCard) => {setCards((state) => state.map((c) => c._id === card._id ? newCard : c));})
+                .catch((err) => {console.log(err)});
     };//проверяем лайк на карточке, (диз)лайкаем
 
     function handleCardDelete(card) {
@@ -90,7 +92,7 @@ function App() {
             .then((result) => {
                 setCards([result, ...cards]);
             })
-            .then(closeAllPopups())
+            .then(closeAllPopups)
             .catch((err) => {console.log(err)});
     };//отправляем новую карточку на сервер, обновляем стейт с карточками
 
