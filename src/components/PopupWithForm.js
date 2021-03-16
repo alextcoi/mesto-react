@@ -8,7 +8,7 @@ function PopupWithForm (props) {
 
     return (
         <section className={`popup popup_${props.name} ${openClass}`}>
-            <form name={props.name} className={`form form_${props.name} popup__form`} noValidate>
+            <form name={props.name} className={`form form_${props.name} popup__form`} onSubmit={props.onSubmit} noValidate>
                 <h2 className={`form__title form__title_${props.name}`}>{props.title}</h2>
                 {props.children}
                 <button type="submit" className="form__save-button popup__button">{props.buttonTitle}</button>

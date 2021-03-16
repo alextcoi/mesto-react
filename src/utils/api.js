@@ -59,8 +59,8 @@ class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: item.form_name,
-                about: item.form_profession
+                name: item.name,
+                about: item.about
             }),
             })
             .then(this._checkResponse)

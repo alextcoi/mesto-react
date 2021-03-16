@@ -1,35 +1,12 @@
 import editButton from '../images/edit_button.svg';
 import addButton from '../images/add_button.svg';
-import api from '../utils/api.js';
-import { useEffect, useState } from 'react';
 import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import React from 'react';
 
-function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
+function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete}) {
 
-    const [userName, setName] = useState('');//стейт для имени пользователя
-    const [userDescription, setDescription] = useState('');//стейт для профессии пользователя
-    const [userAvatar, setAvatar] = useState('');//стейт для фото профиля
-    const [cards, setCards] = useState([]);//стейт для массива карточек с сервера
-
-    useEffect(() => {
-        handleRequest();
-    }, []);//кидаем один раз запрос на сервер за данным пользователя и карточками
-
-    const handleRequest = () => {
-        api.getProfile()
-            .then((result) => {
-                setName(result.name);
-                setDescription(result.about);
-                setAvatar(result.avatar);
-            })
-            .catch((err) => {console.log(err)});
-
-        api.getCards()
-            .then((result) => {
-                setCards(result);
-            })
-            .catch((err) => {console.log(err)});
-    };//кидаем один раз запрос на сервер за данным пользователя и карточками
+    const userData = React.useContext(CurrentUserContext);//подписываемся на контекст с данными пользователя
 
     return (
         <main className="main">
@@ -38,14 +15,14 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
                     <div className="profile__avatar-edit-button-container">
                         <img className="profile__avatar-edit-button" src={editButton} alt="Кнопка Редактировать"/>
                     </div>
-                    <img className="profile__avatar" src={userAvatar} alt="Фото пользователя"/>
+                    <img className="profile__avatar" src={userData.avatar} alt="Фото пользователя"/>
                 </button>
                 <div className="profile__info">
-                    <h1 id="name" className="profile__title">{userName}</h1>
+                    <h1 id="name" className="profile__title">{userData.name}</h1>
                     <button type="button" className="profile__edit-button" onClick={onEditProfile}>
                         <img className="profile__edit-button-picture" src={editButton} alt="Кнопка Редактировать"/>
                     </button>
-                    <p id="profession" className="profile__subtitle">{userDescription}</p>
+                    <p id="profession" className="profile__subtitle">{userData.about}</p>
                 </div>
                 <button type="button" className="profile__add-button" onClick={onAddPlace}>
                     <img className="profile__add-button-picture" src={addButton} alt="Кнопка Добавить"/>
@@ -59,6 +36,8 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
                                 key={item._id}
                                 card={item}
                                 onCardClick={onCardClick}
+                                onCardLike={onCardLike}
+                                onCardDelete={onCardDelete}
                             />)
                         )
                     }
