@@ -1,0 +1,11 @@
+.sign-login-form__text_login {
+  text-decoration: none;
+  margin-left: 4px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.sign-login-form__text_login:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

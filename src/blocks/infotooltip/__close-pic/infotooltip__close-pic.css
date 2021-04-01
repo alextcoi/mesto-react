@@ -1,0 +1,9 @@
+.infotooltip__close-pic {
+  height: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .infotooltip__close-pic {
+    height: 26px;
+  }
+}
